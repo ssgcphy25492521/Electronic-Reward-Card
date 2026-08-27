@@ -17,7 +17,6 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            /* 升級為更加繽紛絢麗的校慶嘉年華漸變色（藍、紫、桃紅交織） */
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #311042 70%, #4c0519 100%);
             color: var(--text-color);
             margin: 0;
@@ -30,7 +29,6 @@
             overflow-x: hidden;
         }
 
-        /* 五彩紙屑背景圖層 */
         .confetti-bg {
             position: fixed;
             top: 0;
@@ -105,7 +103,6 @@
             justify-items: center;
         }
 
-        /* 圓形徽章基礎樣式 */
         .card {
             background: #f8fafc;
             border: 3px solid var(--border-color);
@@ -122,7 +119,6 @@
             box-shadow: inset 0 0 0 4px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        /* 激活後的彩色亮麗效果（金色光暈） */
         .card.active {
             background: var(--ssgc-blue);
             border: 4px solid var(--ssgc-gold);
@@ -160,7 +156,6 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
         }
 
-        /* 紅底金勾圓章 */
         .stamp-mark {
             position: absolute;
             top: 2px;
@@ -188,7 +183,6 @@
             transform: scale(1) rotate(0deg);
         }
 
-        /* 慶典繽紛祝賀橫幅 */
         .congrats {
             display: none;
             background: linear-gradient(135deg, #e6fffa 0%, #ccfbf1 100%);
@@ -236,7 +230,6 @@
 </head>
 <body>
 
-    <!-- 浮動五彩紙屑圖層 -->
     <div class="confetti-bg" id="confettiContainer"></div>
 
     <div class="container">
@@ -299,10 +292,9 @@
     </div>
 
     <script>
-        // 生成繽紛多色的漂浮五彩星光
         function createConfetti() {
             const container = document.getElementById('confettiContainer');
-            const colors = ['#facc15', '#4ade80', '#f43f5e', '#38bdf8', '#e879f9']; // 金黃、翠綠、桃紅、天藍、亮紫
+            const colors = ['#facc15', '#4ade80', '#f43f5e', '#38bdf8', '#e879f9']; 
             const count = 30; 
 
             for (let i = 0; i < count; i++) {
@@ -312,9 +304,13 @@
                 sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
                 sparkle.style.left = Math.random() * 100 + 'vw';
                 sparkle.style.top = Math.random() * -20 + 'px';
+                sparkle.style.animationDuration = (Math.random() * 5 + 5) broadband + 's';
                 sparkle.style.animationDuration = (Math.random() * 5 + 5) + 's';
                 sparkle.style.animationDelay = (Math.random() * 5) + 's';
                 sparkle.style.fontSize = (Math.random() * 10 + 12) + 'px';
                 container.appendChild(sparkle);
             }
         }
+        createConfetti();
+
+        const urlParams = new URLSearchParams(window.location.search);
