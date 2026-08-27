@@ -6,7 +6,7 @@
     <title>SSGC 120th Anniversary Open Day</title>
     <style>
         :root {
-            --bg-color: #0a192f; /* 保持你要求的深藍色背景 */
+            --bg-color: #0a192f; 
             --card-bg: #ffffff;
             --text-color: #2d3748;
             --primary: #1a365d; 
@@ -79,7 +79,6 @@
             margin-top: 10px;
         }
 
-        /* 還原為最穩定的方塊樣式 */
         .card {
             background: #f7fafc;
             border: 2px dashed var(--border-color);
@@ -240,22 +239,18 @@
     </div>
 
     <script>
-        // 核心邏輯：讀取網址 URL 參數
         const urlParams = new URLSearchParams(window.location.search);
         const zoneScanned = urlParams.get('zone'); 
 
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
 
-        // 如果讀取到正確的 zone 參數，將其存入手機本地 LocalStorage
         if (zoneScanned && validZones.includes(zoneScanned)) {
             localStorage.setItem(zoneScanned, 'true');
             
-            // 清理網址欄，防止重新整理網頁時重複觸發
             const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.history.replaceState({path: cleanUrl}, '', cleanUrl);
         }
 
-        // 渲染印章狀態
         function renderStamps() {
             let completedCount = 0;
 
@@ -273,7 +268,6 @@
                 }
             });
 
-            // 檢查是否集齊 6 個
             if (completedCount === 6) {
                 document.getElementById('congratsMessage').style.display = 'block';
             } else {
@@ -281,7 +275,6 @@
             }
         }
 
-        // 重置按鈕
         function resetCard() {
             if (confirm("確定要清除所有印章記錄嗎？\nAre you sure you want to clear your stamps?")) {
                 validZones.forEach(zone => localStorage.removeItem(zone));
@@ -289,7 +282,6 @@
             }
         }
 
-        // 頁面加載時立即執行一次
         renderStamps();
     </script>
 </body>
