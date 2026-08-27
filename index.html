@@ -88,7 +88,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
             min-height: 130px;
             box-sizing: border-box;
         }
@@ -118,37 +117,49 @@
             width: 100%;
         }
 
+        /* Standard Empty Circle Layout */
         .stamp-slot {
             position: relative;
             width: 52px;
             height: 52px;
-            background: #ffffff;
-            border: 2px dashed #cbd5e0;
+            background: #edf2f7;
+            border: 2px solid #cbd5e0;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
-            transition: all 0.25s ease;
         }
 
-        .stamp-slot .icon {
-            font-size: 26px;
-            opacity: 0.18;
-            margin: 0;
-            line-height: 1;
-            z-index: 1;
-            transition: all 0.25s ease;
+        /* Default Placeholder Text State */
+        .stamp-slot .placeholder {
+            display: block;
+            color: #a0aec0;
+            font-size: 14px;
+            font-weight: bold;
         }
 
+        /* Hide active elements inside empty slots */
+        .stamp-slot .icon,
+        .stamp-slot .stamp-mark {
+            display: none;
+        }
+
+        /* ACTIVE STAMP STATE: Swaps out styles without running performance filters */
         .stamp-slot.active {
             background: #c6f6d5 !important;
             border: 2px solid var(--success) !important;
-            transform: scale(1.05);
         }
 
+        /* Show the stamp elements when unlocked */
         .stamp-slot.active .icon {
-            opacity: 1 !important;
+            display: block !important;
+            font-size: 26px;
+        }
+
+        /* Hide the fallback number when active */
+        .stamp-slot.active .placeholder {
+            display: none !important;
         }
 
         .stamp-mark {
@@ -161,18 +172,13 @@
             width: 16px;
             height: 16px;
             font-size: 10px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.2s ease;
             z-index: 5;
         }
 
         .stamp-slot.active .stamp-mark {
-            opacity: 1;
-            transform: scale(1);
+            display: flex;
         }
 
         .congrats {
@@ -196,7 +202,6 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
-            transition: all 0.2s;
         }
 
         .reset-btn:hover {
@@ -219,8 +224,8 @@
             <!-- Zone 1 -->
             <div class="card" id="zone1">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏮</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏮</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏮</div><div class="placeholder">①</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏮</div><div class="placeholder">②</div></div>
                 </div>
                 <div class="label">Zone 1</div>
             </div>
@@ -228,8 +233,8 @@
             <!-- Zone 2 -->
             <div class="card" id="zone2">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🎶</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🎶</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🎶</div><div class="placeholder">①</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🎶</div><div class="placeholder">②</div></div>
                 </div>
                 <div class="label">Zone 2</div>
             </div>
@@ -237,8 +242,8 @@
             <!-- Zone 3 -->
             <div class="card" id="zone3">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💻</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💻</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💻</div><div class="placeholder">①</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💻</div><div class="placeholder">②</div></div>
                 </div>
                 <div class="label">Zone 3</div>
             </div>
@@ -246,8 +251,8 @@
             <!-- Zone 4 -->
             <div class="card" id="zone4">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💼</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💼</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💼</div><div class="placeholder">①</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💼</div><div class="placeholder">②</div></div>
                 </div>
                 <div class="label">Zone 4</div>
             </div>
@@ -255,8 +260,8 @@
             <!-- Zone 5 -->
             <div class="card" id="zone5">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div><div class="placeholder">①</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div><div class="placeholder">②</div></div>
                 </div>
                 <div class="label">Zone 5</div>
             </div>
@@ -264,8 +269,8 @@
             <!-- Zone 6 -->
             <div class="card" id="zone6">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏀</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏀</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏀</div><div class="placeholder">①</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏀</div><div class="placeholder">②</div></div>
                 </div>
                 <div class="label">Zone 6</div>
             </div>
@@ -281,41 +286,19 @@
 
     <script>
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
-        
-        // Anti-Crash Memory Object Sandbox Fallback
         let memorySandbox = {};
 
-        // Safe Database Read API
         function safeRead(key) {
-            try {
-                return localStorage.getItem(key) || memorySandbox[key] || '';
-            } catch (e) {
-                return memorySandbox[key] || '';
-            }
+            try { return localStorage.getItem(key) || memorySandbox[key] || ''; } catch (e) { return memorySandbox[key] || ''; }
         }
 
-        // Safe Database Write API
         function safeWrite(key, value) {
-            try {
-                localStorage.setItem(key, value);
-            } catch (e) {
-                // Silently switch to sandbox tracking if browser throws security exceptions
-                memorySandbox[key] = value;
-            }
+            try { localStorage.setItem(key, value); } catch (e) { memorySandbox[key] = value; }
         }
 
-        // Safe Database Clear API
         function safeDelete(key) {
-            try {
-                localStorage.removeItem(key);
-            } catch (e) {
-                delete memorySandbox[key];
-            }
+            try { localStorage.removeItem(key); } catch (e) { delete memorySandbox[key]; }
         }
 
         function getSafeStampCount(zone) {
             const rawValue = safeRead(zone);
-            if (!rawValue) return 0;
-            if (rawValue === 'true') return 1; 
-            const parsed = parseInt(rawValue, 10);
-            return isNaN(parsed) ? 0 : parsed;
