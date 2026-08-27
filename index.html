@@ -93,7 +93,7 @@
             box-sizing: border-box;
         }
 
-        /* Highlights card when zone is completely done */
+        /* Highlights entire zone green when completely done */
         .card.zone-complete {
             border: 2px solid var(--success);
             background: #f0fff4;
@@ -112,7 +112,7 @@
 
         .stamps-row {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             justify-content: center;
             margin-bottom: 10px;
             width: 100%;
@@ -120,9 +120,9 @@
 
         .stamp-slot {
             position: relative;
-            width: 50px;
-            height: 50px;
-            background: #f0f4f8;
+            width: 52px;
+            height: 52px;
+            background: #ffffff;
             border: 2px dashed #cbd5e0;
             border-radius: 50%;
             display: flex;
@@ -132,38 +132,25 @@
             box-sizing: border-box;
         }
 
-        /* Default Placeholder Text Style */
-        .stamp-slot::before {
-            content: "•";
-            color: #a0aec0;
-            font-size: 24px;
-            position: absolute;
-            transition: all 0.2s;
-        }
-
-        /* Hide emoji icons completely until active state to prevent rendering issues */
+        /* Clean fading instead of grayscale to maintain full mobile compatibility */
         .stamp-slot .icon {
             font-size: 26px;
-            display: none;
+            opacity: 0.15;
+            transition: all 0.3s ease;
             margin: 0;
             line-height: 1;
         }
 
-        /* Active Stamp State overrides */
+        /* Activated Stamp State */
         .stamp-slot.active {
             border: 2px solid var(--success);
             background: #ffffff;
             transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* Hide the placeholder dot when stamped */
-        .stamp-slot.active::before {
-            display: none;
-        }
-
-        /* Flexibly reveal full color emojis cleanly */
         .stamp-slot.active .icon {
-            display: block;
+            opacity: 1;
         }
 
         .stamp-mark {
@@ -297,20 +284,24 @@
     <script>
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
 
-        // Automatically purge conflicting text representations in local memory 
-        validZones.forEach(zone => {
-            const val = localStorage.getItem(zone);
-            if (val === 'true' || val === 'false') {
-                localStorage.removeItem(zone);
-            }
-        });
-
+        // Helper function that reads both old string data ('true') and new numbers ('1', '2')
         function getSafeStampCount(zone) {
             const rawValue = localStorage.getItem(zone);
             if (!rawValue) return 0;
+            if (rawValue === 'true') return 1; // Backward compatibility fallback rule
             const parsed = parseInt(rawValue, 10);
             return isNaN(parsed) ? 0 : parsed;
         }
 
         function processIncomingScan() {
             const urlParams = new URLSearchParams(window.location.search);
+            const zoneScanned = urlParams.get('zone'); 
+
+            if (zoneScanned && validZones.includes(zoneScanned)) {
+                let currentStamps = getSafeStampCount(zoneScanned);
+                
+                if (currentStamps < 2) {
+                    currentStamps++;
+                    localStorage.setItem(zoneScanned, currentStamps.toString());
+                }
+                
