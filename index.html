@@ -6,18 +6,17 @@
     <title>SSGC 120th Anniversary Open Day</title>
     <style>
         :root {
+            --bg-color: #0a192f; /* 保持你要求的深藍色背景 */
             --card-bg: #ffffff;
             --text-color: #2d3748;
-            --primary-blue: #1a365d; 
-            --ssgc-blue: #1d4ed8;    
-            --ssgc-gold: #facc15;    
-            --ssgc-red: #ef4444;     
+            --primary: #1a365d; 
+            --success: #2f855a; 
             --border-color: #cbd5e0;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #311042 70%, #4c0519 100%);
+            background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 15px;
@@ -25,25 +24,6 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .confetti-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .sparkle {
-            position: absolute;
-            font-size: 16px;
-            opacity: 0.7;
-            animation: fall linear infinite;
         }
 
         .container {
@@ -51,13 +31,11 @@
             width: 100%;
             background: var(--card-bg);
             padding: 25px 20px;
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 10px 15px -6px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
             text-align: center;
             box-sizing: border-box;
-            margin-top: 15px;
-            position: relative;
-            z-index: 1; 
+            margin-top: 20px;
         }
 
         header {
@@ -70,14 +48,13 @@
         }
 
         .school-badge {
-            width: 95px;
+            width: 100px;
             height: auto;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            margin-bottom: 15px;
         }
 
         .school-title {
-            color: var(--primary-blue);
+            color: var(--primary);
             font-size: 20px;
             font-weight: 700;
             margin: 0 0 8px 0;
@@ -97,104 +74,89 @@
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+            gap: 15px;
             margin-bottom: 25px;
-            margin-top: 15px;
-            justify-items: center;
+            margin-top: 10px;
         }
 
+        /* 還原為最穩定的方塊樣式 */
         .card {
-            background: #f8fafc;
-            border: 3px solid var(--border-color);
-            border-radius: 50%;
-            width: 135px;
-            height: 135px;
+            background: #f7fafc;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 18px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             position: relative;
-            box-sizing: border-box;
-            box-shadow: inset 0 0 0 4px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.15);
+            min-height: 110px;
         }
 
         .card.active {
-            background: var(--ssgc-blue);
-            border: 4px solid var(--ssgc-gold);
-            box-shadow: inset 0 0 0 5px rgba(250, 204, 21, 0.2), 
-                        0 0 20px rgba(250, 204, 21, 0.6), 
-                        0 10px 22px -5px rgba(29, 78, 216, 0.7);
-            transform: translateY(-6px) scale(1.04);
+            border: 2px solid var(--success);
+            background: #f0fff4;
+            box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
         }
 
         .icon {
-            font-size: 40px; 
-            margin-bottom: 2px;
+            font-size: 36px;
+            margin-bottom: 8px;
             filter: grayscale(100%);
-            opacity: 0.15;
-            transition: all 0.4s ease;
+            opacity: 0.25;
+            transition: all 0.3s ease;
         }
 
         .card.active .icon {
-            filter: grayscale(0%) drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+            filter: grayscale(0%);
             opacity: 1;
-            transform: scale(1.15);
+            transform: scale(1.08);
         }
 
         .label {
             font-size: 13px;
-            font-weight: 800;
-            color: #718096;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #4a5568;
         }
 
         .card.active .label {
-            color: var(--ssgc-gold);
-            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            color: var(--success);
         }
 
         .stamp-mark {
             position: absolute;
-            top: 2px;
-            right: 2px;
-            background: var(--ssgc-red);
-            color: var(--ssgc-gold);
-            border: 2px solid var(--ssgc-gold);
+            top: 6px;
+            right: 6px;
+            background: var(--success);
+            color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            font-size: 13px;
-            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transform: scale(0) rotate(-45deg);
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            z-index: 2;
+            transform: scale(0);
+            transition: all 0.25s ease;
         }
 
         .card.active .stamp-mark {
             opacity: 1;
-            transform: scale(1) rotate(0deg);
+            transform: scale(1);
         }
 
         .congrats {
             display: none;
-            background: linear-gradient(135deg, #e6fffa 0%, #ccfbf1 100%);
-            color: #0f4c46;
-            padding: 16px;
-            border-radius: 12px;
+            background: #e6fffa;
+            color: #234e52;
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 15px;
             font-weight: 700;
             font-size: 15px;
-            border: 2px solid #99f6e4;
-            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
-            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #b2f5ea;
         }
 
         .reset-btn {
@@ -214,23 +176,9 @@
             color: #4a5568;
             border-color: #a0aec0;
         }
-
-        @keyframes pop {
-            0% { transform: scale(0.92); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-        }
     </style>
 </head>
 <body>
-
-    <div class="confetti-bg" id="confettiContainer"></div>
 
     <div class="container">
         <header>
@@ -292,26 +240,57 @@
     </div>
 
     <script>
-        function createConfetti() {
-            const container = document.getElementById('confettiContainer');
-            const colors = ['#facc15', '#4ade80', '#f43f5e', '#38bdf8', '#e879f9']; 
-            const count = 30; 
-
-            for (let i = 0; i < count; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.innerText = '✨';
-                sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                sparkle.style.left = Math.random() * 100 + 'vw';
-                sparkle.style.top = Math.random() * -20 + 'px';
-                sparkle.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                sparkle.style.animationDelay = (Math.random() * 5) + 's';
-                sparkle.style.fontSize = (Math.random() * 10 + 12) + 'px';
-                container.appendChild(sparkle);
-            }
-        }
-        createConfetti();
-
+        // 核心邏輯：讀取網址 URL 參數
         const urlParams = new URLSearchParams(window.location.search);
         const zoneScanned = urlParams.get('zone'); 
 
+        const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
+
+        // 如果讀取到正確的 zone 參數，將其存入手機本地 LocalStorage
+        if (zoneScanned && validZones.includes(zoneScanned)) {
+            localStorage.setItem(zoneScanned, 'true');
+            
+            // 清理網址欄，防止重新整理網頁時重複觸發
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        }
+
+        // 渲染印章狀態
+        function renderStamps() {
+            let completedCount = 0;
+
+            validZones.forEach(zone => {
+                const isStamped = localStorage.getItem(zone) === 'true';
+                const cardElement = document.getElementById(zone);
+                
+                if (cardElement) {
+                    if (isStamped) {
+                        cardElement.classList.add('active');
+                        completedCount++;
+                    } else {
+                        cardElement.classList.remove('active');
+                    }
+                }
+            });
+
+            // 檢查是否集齊 6 個
+            if (completedCount === 6) {
+                document.getElementById('congratsMessage').style.display = 'block';
+            } else {
+                document.getElementById('congratsMessage').style.display = 'none';
+            }
+        }
+
+        // 重置按鈕
+        function resetCard() {
+            if (confirm("確定要清除所有印章記錄嗎？\nAre you sure you want to clear your stamps?")) {
+                validZones.forEach(zone => localStorage.removeItem(zone));
+                renderStamps();
+            }
+        }
+
+        // 頁面加載時立即執行一次
+        renderStamps();
+    </script>
+</body>
+</html>
