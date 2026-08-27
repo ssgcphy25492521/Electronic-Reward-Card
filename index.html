@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSGC 120th Anniversary Open Day</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --primary: #1a365d; 
+            --success: #2f855a; 
+            --border-color: #cbd5e0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 15px;
+        }
+
+        .school-title {
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            line-height: 1.3;
+            white-space: pre-line;
+        }
+
+        .event-title {
+            color: #4a5568;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4;
+            white-space: pre-line;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #f7fafc;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 18px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            min-height: 110px;
+        }
+
+        .card.active {
+            border: 2px solid var(--success);
+            background: #f0fff4;
+            box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
+        }
+
+        .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+            filter: grayscale(100%);
+            opacity: 0.25;
+            transition: all 0.3s ease;
+        }
+
+        .card.active .icon {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
+        .label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .card.active .label {
+            color: var(--success);
+        }
+
+        .stamp-mark {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.25s ease;
+        }
+
+        .card.active .stamp-mark {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .congrats {
+            display: none;
+            background: #e6fffa;
+            color: #234e52;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 700;
+            font-size: 15px;
+            border: 1px solid #b2f5ea;
+            animation: pop 0.4s ease-out;
+        }
+
+        .reset-btn {
+            margin-top: 25px;
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: #a0aec0;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 class="school-title">St. Stephen’s Girls’ College<br>聖士提反女子中學</h1>
+            <h2 class="event-title">120<sup>th</sup> Anniversary Open Day<br>一百二十周年校慶開放日</h2>
+        </header>
+
+        <div class="subtitle">請向各展區工作人員出示此頁面或掃描二維碼以收集印章！</div>
+
+        <div class="grid">
+            <!-- Zone 1 -->
+            <div class="card" id="zone1">
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🏮</div>
+                <div class="label">Zone 1</div>
+            </div>
+
+            <!-- Zone 2 -->
+            <div class="card" id="zone2">
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🎶</div>
+                <div class="label">Zone 2</div>
+            </div>
+
+            <!-- Zone 3 -->
+            <div class="card" id="zone3">
+                <div class="stamp-mark">✓</div>
+                <div class="icon">💻</div>
+                <div class="label">Zone 3</div>
+            </div>
+
+            <!-- Zone 4 -->
+            <div class="card" id="zone4">
+                <div class="stamp-mark">✓</div>
+                <div class="icon">💼</div>
+                <div class="label">Zone 4</div>
+            </div>
+
+            <!-- Zone 5 -->
+            <div class="card" id="zone5">
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🧘‍♀️</div>
+                <div class="label">Zone 5</div>
+            </div>
+
+            <!-- Zone 6 -->
+            <div class="card" id="zone6">
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🏀</div>
+                <div class="label">Zone 6</div>
+            </div>
+        </div>
+
+        <div class="congrats" id="congratsMessage">
+            🎉 恭喜！您已成功集齊 6 個開放日活動印章！<br>
+            Congratulations! You have collected all 6 Open Day stamps!
+        </div>
+
+        <button class="reset-btn" onclick="resetCard()">清除印章數據 (測試用 Reset)</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const zoneScanned = urlParams.get('zone'); 
+
+        const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
+
+        if (zoneScanned && validZones.includes(zoneScanned)) {
+            localStorage.setItem(zoneScanned, 'true');
+            
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        }
+
+        function renderStamps() {
+            let completedCount = 0;
+
+            validZones.forEach(zone => {
+                const isStamped = localStorage.getItem(zone) === 'true';
+                const cardElement = document.getElementById(zone);
+                
+                if (cardElement) {
+                    if (isStamped) {
+                        cardElement.classList.add('active');
+                        completedCount++;
+                    } else {
+                        cardElement.classList.remove('active');
+                    }
+                }
+            });
+
+            if (completedCount === 6) {
+                document.getElementById('congratsMessage').style.display = 'block';
+            } else {
+                document.getElementById('congratsMessage').style.display = 'none';
+            }
+        }
+
+        function resetCard() {
+            if (confirm("確定要清除所有印章記錄嗎？")) {
+                validZones.forEach(zone => localStorage.removeItem(zone));
+                renderStamps();
+            }
+        }
+
+        renderStamps();
+    </script>
+</body>
+</html>
