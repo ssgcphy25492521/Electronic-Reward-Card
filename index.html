@@ -304,7 +304,6 @@
                 sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
                 sparkle.style.left = Math.random() * 100 + 'vw';
                 sparkle.style.top = Math.random() * -20 + 'px';
-                sparkle.style.animationDuration = (Math.random() * 5 + 5) broadband + 's';
                 sparkle.style.animationDuration = (Math.random() * 5 + 5) + 's';
                 sparkle.style.animationDelay = (Math.random() * 5) + 's';
                 sparkle.style.fontSize = (Math.random() * 10 + 12) + 'px';
@@ -314,3 +313,5 @@
         createConfetti();
 
         const urlParams = new URLSearchParams(window.location.search);
+        const zoneScanned = urlParams.get('zone'); 
+
