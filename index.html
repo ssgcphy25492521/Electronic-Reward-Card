@@ -289,24 +289,24 @@
     <script>
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
 
-        // Helper function to safely read stamp data as a valid integer (fixes legacy data issues)
         function getSafeStampCount(zone) {
             const rawValue = localStorage.getItem(zone);
             if (!rawValue) return 0;
-            if (rawValue === 'true') return 1; // Safely handle old data from version 1
+            if (rawValue === 'true') return 1; 
             const parsed = parseInt(rawValue, 10);
             return isNaN(parsed) ? 0 : parsed;
         }
 
         function processIncomingScan() {
             const urlParams = new URLSearchParams(window.location.search);
-            const zoneScanned = urlParams.get('zone'); 
+            
+            // Smart Match: Check for both 'zone' or 'booth' parameter keywords
+            let rawInput = urlParams.get('zone') || urlParams.get('booth'); 
+            if (!rawInput) return;
 
-            if (zoneScanned && validZones.includes(zoneScanned)) {
-                let currentStamps = getSafeStampCount(zoneScanned);
-                
-                if (currentStamps < 2) {
-                    currentStamps++;
-                    localStorage.setItem(zoneScanned, currentStamps.toString());
-                }
-                
+            let zoneScanned = '';
+            rawInput = rawInput.toLowerCase();
+
+            // Handle numbers (e.g., 1, 2) or explicit naming variations (e.g., booth1, zone1)
+            if (rawInput.includes('1') || rawInput === '1') zoneScanned = 'zone1';
+            else if (rawInput.includes('2') || rawInput === '2') zoneScanned = 'zone2';
