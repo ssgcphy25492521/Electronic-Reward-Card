@@ -6,11 +6,13 @@
     <title>SSGC 120th Anniversary Open Day</title>
     <style>
         :root {
-            --bg-color: #f4f7f6;
+            --bg-color: #0a192f; /* 深藍色背景 */
             --card-bg: #ffffff;
             --text-color: #2d3748;
-            --primary: #1a365d; 
-            --success: #2f855a; 
+            --primary-blue: #1a365d; /* 學校標誌性的深藍色 */
+            --ssgc-blue: #1d4ed8;    /* 校徽皇家藍 */
+            --ssgc-gold: #facc15;    /* 校徽金黃色 */
+            --ssgc-red: #ef4444;     /* 校徽五角星紅色 */
             --border-color: #cbd5e0;
         }
 
@@ -32,9 +34,10 @@
             background: var(--card-bg);
             padding: 25px 20px;
             border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
             text-align: center;
             box-sizing: border-box;
+            margin-top: 20px;
         }
 
         header {
@@ -44,7 +47,7 @@
         }
 
         .school-title {
-            color: var(--primary);
+            color: var(--primary-blue);
             font-size: 20px;
             font-weight: 700;
             margin: 0 0 8px 0;
@@ -61,84 +64,96 @@
             white-space: pre-line;
         }
 
-        .subtitle {
-            color: #718096;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 25px;
             margin-bottom: 25px;
+            margin-top: 15px;
+            justify-items: center;
         }
 
+        /* 改造成精緻的圓形徽章樣式 */
         .card {
-            background: #f7fafc;
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 18px 10px;
+            background: #f8fafc;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            width: 135px;
+            height: 135px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            min-height: 110px;
+            box-sizing: border-box;
+            /* 模擬校徽徽章的雙層金色虛線內環外觀 */
+            box-shadow: inset 0 0 0 4px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.1);
         }
 
+        /* 當掃描激活後，徽章轉變為校徽配色（皇家藍底 + 金黃字） */
         .card.active {
-            border: 2px solid var(--success);
-            background: #f0fff4;
-            box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
+            background: var(--ssgc-blue);
+            border: 4px solid var(--ssgc-gold);
+            box-shadow: inset 0 0 0 5px rgba(250, 204, 21, 0.2), 0 10px 20px -5px rgba(29, 78, 216, 0.5);
+            transform: translateY(-4px) scale(1.02);
         }
 
         .icon {
-            font-size: 36px;
-            margin-bottom: 8px;
+            font-size: 38px;
+            margin-bottom: 2px;
             filter: grayscale(100%);
-            opacity: 0.25;
-            transition: all 0.3s ease;
+            opacity: 0.15;
+            transition: all 0.4s ease;
         }
 
         .card.active .icon {
-            filter: grayscale(0%);
+            filter: grayscale(0%) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             opacity: 1;
-            transform: scale(1.08);
+            transform: scale(1.15);
         }
 
         .label {
             font-size: 13px;
-            font-weight: 600;
-            color: #4a5568;
+            font-weight: 800;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
         }
 
+        /* 激活後的文字變成校徽的金黃色 */
         .card.active .label {
-            color: var(--success);
+            color: var(--ssgc-gold);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
         }
 
+        /* 右上角的勾號標記：配合校徽的紅底金勾 */
         .stamp-mark {
             position: absolute;
-            top: 6px;
-            right: 6px;
-            background: var(--success);
-            color: white;
+            top: 2px;
+            right: 2px;
+            background: var(--ssgc-red);
+            color: var(--ssgc-gold);
+            border: 2px solid var(--ssgc-gold);
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 11px;
+            width: 24px;
+            height: 24px;
+            font-size: 13px;
+            font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transform: scale(0);
-            transition: all 0.25s ease;
+            transform: scale(0) rotate(-45deg);
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 2;
         }
 
         .card.active .stamp-mark {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) rotate(0deg);
         }
 
         .congrats {
@@ -157,18 +172,19 @@
         .reset-btn {
             margin-top: 25px;
             background: transparent;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #cbd5e0;
             color: #a0aec0;
             padding: 6px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 12px;
             transition: all 0.2s;
         }
 
         .reset-btn:hover {
             background: #edf2f7;
             color: #4a5568;
+            border-color: #a0aec0;
         }
 
         @keyframes pop {
@@ -184,8 +200,6 @@
             <h1 class="school-title">St. Stephen’s Girls’ College<br>聖士提反女子中學</h1>
             <h2 class="event-title">120<sup>th</sup> Anniversary Open Day<br>一百二十周年校慶開放日</h2>
         </header>
-
-        <div class="subtitle">請向各展區工作人員出示此頁面或掃描二維碼以收集印章！</div>
 
         <div class="grid">
             <!-- Zone 1 -->
@@ -236,7 +250,7 @@
             Congratulations! You have collected all 6 Open Day stamps!
         </div>
 
-        <button class="reset-btn" onclick="resetCard()">清除印章數據 (測試用 Reset)</button>
+        <button class="reset-btn" onclick="resetCard()">Reset 重置</button>
     </div>
 
     <script>
@@ -277,7 +291,7 @@
         }
 
         function resetCard() {
-            if (confirm("確定要清除所有印章記錄嗎？")) {
+            if (confirm("確定要清除所有印章記錄嗎？\nAre you sure you want to clear your stamps?")) {
                 validZones.forEach(zone => localStorage.removeItem(zone));
                 renderStamps();
             }
