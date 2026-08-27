@@ -17,8 +17,8 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            /* 絢麗繽紛的慶典漸變背景 */
-            background: linear-gradient(135deg, #071120 0%, #0c1e36 40%, #17355e 100%);
+            /* 升級為更加繽紛絢麗的校慶嘉年華漸變色（藍、紫、桃紅交織） */
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #311042 70%, #4c0519 100%);
             color: var(--text-color);
             margin: 0;
             padding: 15px;
@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* 慶典金色五彩紙屑漂浮背景效果 */
+        /* 五彩紙屑背景圖層 */
         .confetti-bg {
             position: fixed;
             top: 0;
@@ -43,9 +43,8 @@
 
         .sparkle {
             position: absolute;
-            color: var(--ssgc-gold);
             font-size: 16px;
-            opacity: 0.6;
+            opacity: 0.7;
             animation: fall linear infinite;
         }
 
@@ -54,13 +53,13 @@
             width: 100%;
             background: var(--card-bg);
             padding: 25px 20px;
-            border-radius: 20px; /* 更圓潤現代的外框 */
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), 0 10px 15px -6px rgba(0, 0, 0, 0.4);
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 10px 15px -6px rgba(0, 0, 0, 0.5);
             text-align: center;
             box-sizing: border-box;
             margin-top: 15px;
             position: relative;
-            z-index: 1; /* 確保內容在紙屑上方 */
+            z-index: 1; 
         }
 
         header {
@@ -106,7 +105,7 @@
             justify-items: center;
         }
 
-        /* 圓形徽章基礎外觀 */
+        /* 圓形徽章基礎樣式 */
         .card {
             background: #f8fafc;
             border: 3px solid var(--border-color);
@@ -120,21 +119,21 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             box-sizing: border-box;
-            box-shadow: inset 0 0 0 4px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: inset 0 0 0 4px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        /* 激活後的炫彩效果：新增立體金色光暈外陰影 */
+        /* 激活後的彩色亮麗效果（金色光暈） */
         .card.active {
             background: var(--ssgc-blue);
             border: 4px solid var(--ssgc-gold);
             box-shadow: inset 0 0 0 5px rgba(250, 204, 21, 0.2), 
-                        0 0 15px rgba(250, 204, 21, 0.4), 
-                        0 10px 20px -5px rgba(29, 78, 216, 0.6);
-            transform: translateY(-5px) scale(1.04);
+                        0 0 20px rgba(250, 204, 21, 0.6), 
+                        0 10px 22px -5px rgba(29, 78, 216, 0.7);
+            transform: translateY(-6px) scale(1.04);
         }
 
         .icon {
-            font-size: 40px; /* 微調放大圖標 */
+            font-size: 40px; 
             margin-bottom: 2px;
             filter: grayscale(100%);
             opacity: 0.15;
@@ -142,7 +141,7 @@
         }
 
         .card.active .icon {
-            filter: grayscale(0%) drop-shadow(0 3px 5px rgba(0,0,0,0.25));
+            filter: grayscale(0%) drop-shadow(0 3px 6px rgba(0,0,0,0.3));
             opacity: 1;
             transform: scale(1.15);
         }
@@ -158,7 +157,7 @@
 
         .card.active .label {
             color: var(--ssgc-gold);
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
         }
 
         /* 紅底金勾圓章 */
@@ -189,7 +188,7 @@
             transform: scale(1) rotate(0deg);
         }
 
-        /* 彩艷斑斕的成功祝賀橫幅 */
+        /* 慶典繽紛祝賀橫幅 */
         .congrats {
             display: none;
             background: linear-gradient(135deg, #e6fffa 0%, #ccfbf1 100%);
@@ -227,18 +226,17 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* 背景紙屑降落動畫 */
         @keyframes fall {
             0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
             100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 浮動背景紙屑圖層 -->
+    <!-- 浮動五彩紙屑圖層 -->
     <div class="confetti-bg" id="confettiContainer"></div>
 
     <div class="container">
@@ -301,19 +299,22 @@
     </div>
 
     <script>
-        // 生成背景漂浮紙屑特效
+        // 生成繽紛多色的漂浮五彩星光
         function createConfetti() {
             const container = document.getElementById('confettiContainer');
-            const icons = ['✨', '✨', '🟡', '🔸', '▫️']; // 各式金色及閃爍圖標
-            const count = 25; // 限制數量防卡頓
+            const colors = ['#facc15', '#4ade80', '#f43f5e', '#38bdf8', '#e879f9']; // 金黃、翠綠、桃紅、天藍、亮紫
+            const count = 30; 
 
             for (let i = 0; i < count; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
-                sparkle.innerText = icons[Math.floor(Math.random() * icons.length)];
+                sparkle.innerText = '✨';
+                sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
                 sparkle.style.left = Math.random() * 100 + 'vw';
                 sparkle.style.top = Math.random() * -20 + 'px';
                 sparkle.style.animationDuration = (Math.random() * 5 + 5) + 's';
                 sparkle.style.animationDelay = (Math.random() * 5) + 's';
                 sparkle.style.fontSize = (Math.random() * 10 + 12) + 'px';
                 container.appendChild(sparkle);
+            }
+        }
