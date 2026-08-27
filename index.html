@@ -83,19 +83,34 @@
             background: #f7fafc;
             border: 2px dashed var(--border-color);
             border-radius: 12px;
-            padding: 15px 8px;
+            padding: 18px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 130px;
-            box-sizing: border-box;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 110px;
         }
 
-        .card.zone-complete {
+        .card.active {
             border: 2px solid var(--success);
             background: #f0fff4;
             box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
+        }
+
+        .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+            filter: grayscale(100%);
+            opacity: 0.25;
+            transition: all 0.3s ease;
+        }
+
+        .card.active .icon {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.08);
         }
 
         .label {
@@ -104,81 +119,31 @@
             color: #4a5568;
         }
 
-        .card.zone-complete .label {
+        .card.active .label {
             color: var(--success);
-            font-weight: 700;
-        }
-
-        .stamps-row {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        /* Standard Empty Circle Layout */
-        .stamp-slot {
-            position: relative;
-            width: 52px;
-            height: 52px;
-            background: #edf2f7;
-            border: 2px solid #cbd5e0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        /* Default Placeholder Text State */
-        .stamp-slot .placeholder {
-            display: block;
-            color: #a0aec0;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        /* Hide active elements inside empty slots */
-        .stamp-slot .icon,
-        .stamp-slot .stamp-mark {
-            display: none;
-        }
-
-        /* ACTIVE STAMP STATE: Swaps out styles without running performance filters */
-        .stamp-slot.active {
-            background: #c6f6d5 !important;
-            border: 2px solid var(--success) !important;
-        }
-
-        /* Show the stamp elements when unlocked */
-        .stamp-slot.active .icon {
-            display: block !important;
-            font-size: 26px;
-        }
-
-        /* Hide the fallback number when active */
-        .stamp-slot.active .placeholder {
-            display: none !important;
         }
 
         .stamp-mark {
             position: absolute;
-            top: -4px;
-            right: -4px;
+            top: 6px;
+            right: 6px;
             background: var(--success);
             color: white;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 5;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.25s ease;
         }
 
-        .stamp-slot.active .stamp-mark {
-            display: flex;
+        .card.active .stamp-mark {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .congrats {
@@ -202,6 +167,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
+            transition: all 0.2s;
         }
 
         .reset-btn:hover {
@@ -223,82 +189,100 @@
         <div class="grid">
             <!-- Zone 1 -->
             <div class="card" id="zone1">
-                <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏮</div><div class="placeholder">①</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏮</div><div class="placeholder">②</div></div>
-                </div>
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🏮</div>
                 <div class="label">Zone 1</div>
             </div>
 
             <!-- Zone 2 -->
             <div class="card" id="zone2">
-                <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🎶</div><div class="placeholder">①</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🎶</div><div class="placeholder">②</div></div>
-                </div>
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🎶</div>
                 <div class="label">Zone 2</div>
             </div>
 
             <!-- Zone 3 -->
             <div class="card" id="zone3">
-                <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💻</div><div class="placeholder">①</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💻</div><div class="placeholder">②</div></div>
-                </div>
+                <div class="stamp-mark">✓</div>
+                <div class="icon">💻</div>
                 <div class="label">Zone 3</div>
             </div>
 
             <!-- Zone 4 -->
             <div class="card" id="zone4">
-                <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💼</div><div class="placeholder">①</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💼</div><div class="placeholder">②</div></div>
-                </div>
+                <div class="stamp-mark">✓</div>
+                <div class="icon">💼</div>
                 <div class="label">Zone 4</div>
             </div>
 
             <!-- Zone 5 -->
             <div class="card" id="zone5">
-                <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div><div class="placeholder">①</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div><div class="placeholder">②</div></div>
-                </div>
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🧘‍♀️</div>
                 <div class="label">Zone 5</div>
             </div>
 
             <!-- Zone 6 -->
             <div class="card" id="zone6">
-                <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏀</div><div class="placeholder">①</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏀</div><div class="placeholder">②</div></div>
-                </div>
+                <div class="stamp-mark">✓</div>
+                <div class="icon">🏀</div>
                 <div class="label">Zone 6</div>
             </div>
         </div>
 
         <div class="congrats" id="congratsMessage">
-            🎉 恭喜！您已成功集齊 12 個開放日活動印章！<br>
-            Congratulations! You have collected all 12 Open Day stamps!
+            🎉 恭喜！您已成功集齊 6 個開放日活動印章！<br>
+            Congratulations! You have collected all 6 Open Day stamps!
         </div>
 
         <button class="reset-btn" onclick="resetCard()">Reset 重置</button>
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const zoneScanned = urlParams.get('zone'); 
+
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
-        let memorySandbox = {};
 
-        function safeRead(key) {
-            try { return localStorage.getItem(key) || memorySandbox[key] || ''; } catch (e) { return memorySandbox[key] || ''; }
+        if (zoneScanned && validZones.includes(zoneScanned)) {
+            localStorage.setItem(zoneScanned, 'true');
+            
+            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
         }
 
-        function safeWrite(key, value) {
-            try { localStorage.setItem(key, value); } catch (e) { memorySandbox[key] = value; }
+        function renderStamps() {
+            let completedCount = 0;
+
+            validZones.forEach(zone => {
+                const isStamped = localStorage.getItem(zone) === 'true';
+                const cardElement = document.getElementById(zone);
+                
+                if (cardElement) {
+                    if (isStamped) {
+                        cardElement.classList.add('active');
+                        completedCount++;
+                    } else {
+                        cardElement.classList.remove('active');
+                    }
+                }
+            });
+
+            if (completedCount === 6) {
+                document.getElementById('congratsMessage').style.display = 'block';
+            } else {
+                document.getElementById('congratsMessage').style.display = 'none';
+            }
         }
 
-        function safeDelete(key) {
-            try { localStorage.removeItem(key); } catch (e) { delete memorySandbox[key]; }
+        function resetCard() {
+            if (confirm("確定要清除所有印章記錄嗎？\nAre you sure you want to clear your stamps?")) {
+                validZones.forEach(zone => localStorage.removeItem(zone));
+                renderStamps();
+            }
         }
 
-        function getSafeStampCount(zone) {
-            const rawValue = safeRead(zone);
+        renderStamps();
+    </script>
+</body>
+</html>
