@@ -12,7 +12,6 @@
             --primary: #1a365d; 
             --success: #2f855a; 
             --border-color: #cbd5e0;
-            --stamp-active-bg: #c6f6d5; /* Bright green background for active stamps */
         }
 
         body {
@@ -94,10 +93,10 @@
             box-sizing: border-box;
         }
 
-        /* Card turns light green when BOTH stamps inside are collected */
+        /* Changes the background to full light green when zone is fully completed */
         .card.zone-complete {
             border: 2px solid var(--success);
-            background: #f0fff4;
+            background: #e6fffa;
             box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
         }
 
@@ -120,64 +119,68 @@
             width: 100%;
         }
 
+        /* Default Empty/Locked State: Clean grey circle background */
         .stamp-slot {
-            position: relative;
-            width: 54px;
-            height: 54px;
-            background: #f7fafc;
-            border: 2px dashed #cbd5e0;
+            width: 52px;
+            height: 52px;
+            background: #e2e8f0;
+            border: 2px solid #cbd5e0;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-sizing: border-box;
-        }
-
-        /* Grayed out icon default state */
-        .stamp-slot .icon {
             font-size: 26px;
-            opacity: 0.15;
-            transition: all 0.3s ease;
-            margin: 0;
-            line-height: 1;
-            z-index: 1;
         }
 
-        /* HIGH VISIBILITY ACTIVE STATE: Circle background fills with solid green color */
+        /* Hide active elements inside an empty slot by default */
+        .stamp-slot .icon,
+        .stamp-slot .stamp-mark {
+            display: none;
+        }
+
+        /* Fallback placeholder symbol shown only when slot is locked */
+        .stamp-slot .placeholder {
+            display: block;
+            color: #718096;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* HIGH VISIBILITY ACTIVE STATE: Full solid green circle background */
         .stamp-slot.active {
-            border: 2px solid var(--success);
-            background: var(--stamp-active-bg) !important;
-            transform: scale(1.08);
+            background: #48bb78 !important;
+            border: 2px solid #2f855a !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
 
-        /* Emoji icon becomes 100% visible over the green circle */
+        /* Show emoji elements and hide placeholder when stamp unlocks */
         .stamp-slot.active .icon {
-            opacity: 1 !important;
+            display: block !important;
         }
 
+        .stamp-slot.active .placeholder {
+            display: none !important;
+        }
+
+        /* Checkmark styling overlay */
         .stamp-mark {
             position: absolute;
             top: -4px;
             right: -4px;
-            background: var(--success);
+            background: #2b6cb0;
             color: white;
             border-radius: 50%;
             width: 18px;
             height: 18px;
             font-size: 11px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.25s ease;
             z-index: 5;
         }
 
         .stamp-slot.active .stamp-mark {
-            opacity: 1;
-            transform: scale(1);
+            display: flex;
         }
 
         .congrats {
@@ -224,8 +227,8 @@
             <!-- Zone 1 -->
             <div class="card" id="zone1">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏮</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏮</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏮</div><div class="placeholder">1</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏮</div><div class="placeholder">2</div></div>
                 </div>
                 <div class="label">Zone 1</div>
             </div>
@@ -233,8 +236,8 @@
             <!-- Zone 2 -->
             <div class="card" id="zone2">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🎶</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🎶</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🎶</div><div class="placeholder">1</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🎶</div><div class="placeholder">2</div></div>
                 </div>
                 <div class="label">Zone 2</div>
             </div>
@@ -242,8 +245,8 @@
             <!-- Zone 3 -->
             <div class="card" id="zone3">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💻</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💻</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💻</div><div class="placeholder">1</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💻</div><div class="placeholder">2</div></div>
                 </div>
                 <div class="label">Zone 3</div>
             </div>
@@ -251,8 +254,8 @@
             <!-- Zone 4 -->
             <div class="card" id="zone4">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💼</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💼</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💼</div><div class="placeholder">1</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💼</div><div class="placeholder">2</div></div>
                 </div>
                 <div class="label">Zone 4</div>
             </div>
@@ -260,8 +263,8 @@
             <!-- Zone 5 -->
             <div class="card" id="zone5">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div><div class="placeholder">1</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div><div class="placeholder">2</div></div>
                 </div>
                 <div class="label">Zone 5</div>
             </div>
@@ -269,8 +272,8 @@
             <!-- Zone 6 -->
             <div class="card" id="zone6">
                 <div class="stamps-row">
-                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏀</div></div>
-                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏀</div></div>
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏀</div><div class="placeholder">1</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏀</div><div class="placeholder">2</div></div>
                 </div>
                 <div class="label">Zone 6</div>
             </div>
@@ -296,13 +299,3 @@
         }
 
         function processIncomingScan() {
-            const urlParams = new URLSearchParams(window.location.search);
-            // Handle both uppercase/lowercase variations seamlessly
-            const zoneParam = urlParams.get('zone'); 
-            if (!zoneParam) return;
-            
-            const zoneScanned = zoneParam.toLowerCase();
-
-            if (validZones.includes(zoneScanned)) {
-                let currentStamps = getSafeStampCount(zoneScanned);
-                
