@@ -12,7 +12,6 @@
             --primary: #1a365d; 
             --success: #2f855a; 
             --border-color: #cbd5e0;
-            --stamp-locked: #e2e8f0;
         }
 
         body {
@@ -72,6 +71,7 @@
             white-space: pre-line;
         }
 
+        /* 6 Zones Grid Layout */
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -84,15 +84,17 @@
             background: #f7fafc;
             border: 2px dashed var(--border-color);
             border-radius: 12px;
-            padding: 15px 10px;
+            padding: 15px 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            min-height: 125px;
+            min-height: 130px;
+            box-sizing: border-box;
         }
 
+        /* Highlights entire zone box green when BOTH stamps are earned */
         .card.zone-complete {
             border: 2px solid var(--success);
             background: #f0fff4;
@@ -100,28 +102,29 @@
         }
 
         .label {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             color: #4a5568;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .card.zone-complete .label {
             color: var(--success);
         }
 
-        /* 雙印章版面樣式 */
+        /* Container that holds the 2 identical stamps side-by-side */
         .stamps-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             width: 100%;
         }
 
+        /* The circular stamp slot container */
         .stamp-slot {
-            width: 48px;
-            height: 48px;
-            border: 2px dashed var(--border-color);
+            width: 50px;
+            height: 50px;
+            border: 2px dashed #cbd5e0;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -129,29 +132,34 @@
             background: #ffffff;
             position: relative;
             transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
+        /* Greyed out emoji icon before getting stamped */
         .stamp-slot .icon {
             font-size: 24px;
             filter: grayscale(100%);
-            opacity: 0.2;
+            opacity: 0.15;
             transition: all 0.3s ease;
             margin: 0;
+            padding: 0;
+            line-height: 1;
         }
 
-        /* 已獲取印章的樣式 */
+        /* Active stamp slot state once scan is verified */
         .stamp-slot.active {
             border: 2px solid var(--success);
             background: #ffffff;
             transform: scale(1.05);
         }
 
+        /* Colored emoji icon when stamped */
         .stamp-slot.active .icon {
             filter: grayscale(0%);
             opacity: 1;
         }
 
-        /* 小勾勾打印標記 */
+        /* Corner mini checkmark green badge */
         .stamp-mark {
             position: absolute;
             top: -4px;
@@ -168,6 +176,7 @@
             opacity: 0;
             transform: scale(0);
             transition: all 0.25s ease;
+            z-index: 2;
         }
 
         .stamp-slot.active .stamp-mark {
@@ -222,7 +231,7 @@
         </header>
 
         <div class="grid">
-            <!-- Zone 1 -->
+            <!-- Zone 1: Two identical Lantern stamps -->
             <div class="card" id="zone1">
                 <div class="label">Zone 1</div>
                 <div class="stamps-row">
@@ -231,7 +240,7 @@
                 </div>
             </div>
 
-            <!-- Zone 2 -->
+            <!-- Zone 2: Two identical Music stamps -->
             <div class="card" id="zone2">
                 <div class="label">Zone 2</div>
                 <div class="stamps-row">
@@ -240,7 +249,7 @@
                 </div>
             </div>
 
-            <!-- Zone 3 -->
+            <!-- Zone 3: Two identical Laptop stamps -->
             <div class="card" id="zone3">
                 <div class="label">Zone 3</div>
                 <div class="stamps-row">
@@ -249,7 +258,7 @@
                 </div>
             </div>
 
-            <!-- Zone 4 -->
+            <!-- Zone 4: Two identical Briefcase stamps -->
             <div class="card" id="zone4">
                 <div class="label">Zone 4</div>
                 <div class="stamps-row">
@@ -258,7 +267,7 @@
                 </div>
             </div>
 
-            <!-- Zone 5 -->
+            <!-- Zone 5: Two identical Yoga stamps -->
             <div class="card" id="zone5">
                 <div class="label">Zone 5</div>
                 <div class="stamps-row">
@@ -267,7 +276,7 @@
                 </div>
             </div>
 
-            <!-- Zone 6 -->
+            <!-- Zone 6: Two identical Basketball stamps -->
             <div class="card" id="zone6">
                 <div class="label">Zone 6</div>
                 <div class="stamps-row">
@@ -277,6 +286,7 @@
             </div>
         </div>
 
+        <!-- The system requires 12 total stamps for verification -->
         <div class="congrats" id="congratsMessage">
             🎉 恭喜！您已成功集齊 12 個開放日活動印章！<br>
             Congratulations! You have collected all 12 Open Day stamps!
@@ -292,22 +302,4 @@
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
 
         if (zoneScanned && validZones.includes(zoneScanned)) {
-            // 讀取當前區域已有的印章數量，預設為 0
-            let currentStamps = parseInt(localStorage.getItem(zoneScanned)) || 0;
-            
-            // 限制每個區域最多只能獲得 2 個印章
-            if (currentStamps < 2) {
-                currentStamps++;
-                localStorage.setItem(zoneScanned, currentStamps.toString());
-            }
-            
-            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
-        }
-
-        function renderStamps() {
-            let totalStampsEarned = 0;
-
-            validZones.forEach(zone => {
-                const stampCount = parseInt(localStorage.getItem(zone)) || 0;
-                const cardElement = document.getElementById(zone);
+            // Read current digital count (0, 1, or 2)
