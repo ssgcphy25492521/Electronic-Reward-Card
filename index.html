@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSGC 120th Anniversary Open Day</title>
+    <title>SSGC Physics Challenges</title>
     <style>
         :root {
-            --bg-color: #0a192f; 
+            --bg-color: #f0f4f8;
             --card-bg: #ffffff;
-            --text-color: #2d3748;
-            --primary: #1a365d; 
-            --success: #2f855a; 
-            --border-color: #cbd5e0;
+            --text-color: #1a202c;
+            --primary: #3182ce;
+            --success: #38a169;
+            --stamp-locked: #cbd5e0;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 15px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -27,143 +27,147 @@
         }
 
         .container {
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
             background: var(--card-bg);
-            padding: 25px 20px;
+            padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             text-align: center;
             box-sizing: border-box;
-            margin-top: 20px;
         }
 
-        header {
-            margin-bottom: 25px;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .school-badge {
-            width: 100px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-
-        .school-title {
+        h1 {
             color: var(--primary);
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            line-height: 1.3;
-            white-space: pre-line;
+            margin-bottom: 5px;
+            font-size: 24px;
         }
 
-        .event-title {
-            color: #4a5568;
-            font-size: 16px;
-            font-weight: 600;
-            margin: 0;
-            line-height: 1.4;
-            white-space: pre-line;
+        .subtitle {
+            color: #718096;
+            margin-bottom: 25px;
+            font-size: 14px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-            margin-top: 10px;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .card {
-            background: #f7fafc;
-            border: 2px dashed var(--border-color);
+            background: var(--bg-color);
+            border: 2px dashed #cbd5e0;
             border-radius: 12px;
-            padding: 18px 10px;
+            padding: 15px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            position: relative;
-            min-height: 110px;
+            min-height: 140px;
         }
 
-        .card.active {
+        .card.zone-complete {
             border: 2px solid var(--success);
             background: #f0fff4;
-            box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
-        }
-
-        .icon {
-            font-size: 36px;
-            margin-bottom: 8px;
-            filter: grayscale(100%);
-            opacity: 0.25;
-            transition: all 0.3s ease;
-        }
-
-        .card.active .icon {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.08);
         }
 
         .label {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             color: #4a5568;
+            margin-bottom: 12px;
         }
 
-        .card.active .label {
+        .card.zone-complete .label {
             color: var(--success);
         }
 
+        /* Stamps Layout Inside Each Zone Card */
+        .stamps-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .stamp-slot {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed var(--stamp-locked);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .stamp-slot .icon {
+            font-size: 24px;
+            filter: grayscale(100%);
+            opacity: 0.15;
+            transition: all 0.3s ease;
+        }
+
+        /* Active Slot Styling */
+        .stamp-slot.active {
+            border: 2px solid var(--success);
+            background: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(56, 161, 105, 0.1);
+        }
+
+        .stamp-slot.active .icon {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Small Checkmark Indicator */
         .stamp-mark {
             position: absolute;
-            top: 6px;
-            right: 6px;
+            top: -4px;
+            right: -4px;
             background: var(--success);
             color: white;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 11px;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transform: scale(0);
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
         }
 
-        .card.active .stamp-mark {
+        .stamp-slot.active .stamp-mark {
             opacity: 1;
             transform: scale(1);
         }
 
         .congrats {
             display: none;
-            background: #e6fffa;
-            color: #234e52;
+            background: #c6f6d5;
+            color: #22543d;
             padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-weight: 700;
-            font-size: 15px;
-            border: 1px solid #b2f5ea;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: bold;
+            border: 1px solid #9ae6b4;
+            animation: pop 0.4s ease-out;
         }
 
         .reset-btn {
-            margin-top: 25px;
+            margin-top: 30px;
             background: transparent;
-            border: 1px solid #cbd5e0;
+            border: 1px solid #e2e8f0;
             color: #a0aec0;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
@@ -173,116 +177,123 @@
         .reset-btn:hover {
             background: #edf2f7;
             color: #4a5568;
-            border-color: #a0aec0;
+            border-color: #cbd5e0;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header>
-            <img class="school-badge" src="logo.png" alt="SSGC Crest">
-            <h1 class="school-title">St. Stephen’s Girls’ College<br>聖士提反女子中學</h1>
-            <h2 class="event-title">120<sup>th</sup> Anniversary Open Day<br>一百二十周年校慶開放日</h2>
-        </header>
+        <h1>SSGC Physics Challenges</h1>
+        <div class="subtitle">Scan the QR codes twice at each booth to complete your 12-stamp card!</div>
 
         <div class="grid">
-            <!-- Zone 1 -->
-            <div class="card" id="zone1">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🏮</div>
-                <div class="label">Zone 1</div>
+            <!-- Challenge 1 -->
+            <div class="card" id="booth1">
+                <div class="label">Challenge 1</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🌡️</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🌡️</div></div>
+                </div>
             </div>
 
-            <!-- Zone 2 -->
-            <div class="card" id="zone2">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🎶</div>
-                <div class="label">Zone 2</div>
+            <!-- Challenge 2 -->
+            <div class="card" id="booth2">
+                <div class="label">Challenge 2</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon" style="font-family: serif; font-weight: bold;">∿</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon" style="font-family: serif; font-weight: bold;">∿</div></div>
+                </div>
             </div>
 
-            <!-- Zone 3 -->
-            <div class="card" id="zone3">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">💻</div>
-                <div class="label">Zone 3</div>
+            <!-- Challenge 3 -->
+            <div class="card" id="booth3">
+                <div class="label">Challenge 3</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🐒</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🐒</div></div>
+                </div>
             </div>
 
-            <!-- Zone 4 -->
-            <div class="card" id="zone4">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">💼</div>
-                <div class="label">Zone 4</div>
+            <!-- Challenge 4 -->
+            <div class="card" id="booth4">
+                <div class="label">Challenge 4</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧲</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧲</div></div>
+                </div>
             </div>
 
-            <!-- Zone 5 -->
-            <div class="card" id="zone5">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🧘‍♀️</div>
-                <div class="label">Zone 5</div>
+            <!-- Challenge 5 -->
+            <div class="card" id="booth5">
+                <div class="label">Challenge 5</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💡</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💡</div></div>
+                </div>
             </div>
 
-            <!-- Zone 6 -->
-            <div class="card" id="zone6">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🏀</div>
-                <div class="label">Zone 6</div>
+            <!-- Challenge 6 -->
+            <div class="card" id="booth6">
+                <div class="label">Challenge 6</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🚀</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🚀</div></div>
+                </div>
             </div>
         </div>
 
         <div class="congrats" id="congratsMessage">
-            🎉 恭喜！您已成功集齊 6 個開放日活動印章！<br>
-            Congratulations! You have collected all 6 Open Day stamps!
+            🎉 Congratulations! You have completed all 12 Physics Challenges!
         </div>
 
-        <button class="reset-btn" onclick="resetCard()">Reset 重置</button>
+        <button class="reset-btn" onclick="resetCard()">Reset Card Data (Testing)</button>
     </div>
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const zoneScanned = urlParams.get('zone'); 
+        const boothScanned = urlParams.get('booth');
 
-        const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
+        // Expanded list of valid booth IDs to 6 items
+        const validBooths = ['booth1', 'booth2', 'booth3', 'booth4', 'booth5', 'booth6'];
 
-        if (zoneScanned && validZones.includes(zoneScanned)) {
-            localStorage.setItem(zoneScanned, 'true');
+        if (boothScanned && validBooths.includes(boothScanned)) {
+            // Get current count for this scanned booth (defaults to 0 if not stored)
+            let currentStamps = parseInt(localStorage.getItem(boothScanned)) || 0;
+            
+            // Limit to max 2 stamps per booth
+            if (currentStamps < 2) {
+                currentStamps++;
+                localStorage.setItem(boothScanned, currentStamps.toString());
+            }
             
             const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.history.replaceState({path: cleanUrl}, '', cleanUrl);
         }
 
         function renderStamps() {
-            let completedCount = 0;
+            let totalStampsEarned = 0;
 
-            validZones.forEach(zone => {
-                const isStamped = localStorage.getItem(zone) === 'true';
-                const cardElement = document.getElementById(zone);
+            validBooths.forEach(booth => {
+                const stampCount = parseInt(localStorage.getItem(booth)) || 0;
+                const cardElement = document.getElementById(booth);
+                const slot1 = cardElement.querySelector('.slot-1');
+                const slot2 = cardElement.querySelector('.slot-2');
                 
-                if (cardElement) {
-                    if (isStamped) {
-                        cardElement.classList.add('active');
-                        completedCount++;
-                    } else {
-                        cardElement.classList.remove('active');
-                    }
+                // Track total points for global victory rule
+                totalStampsEarned += stampCount;
+
+                // Handle Slot 1 state
+                if (stampCount >= 1) {
+                    slot1.classList.add('active');
+                } else {
+                    slot1.classList.remove('active');
                 }
-            });
 
-            if (completedCount === 6) {
-                document.getElementById('congratsMessage').style.display = 'block';
-            } else {
-                document.getElementById('congratsMessage').style.display = 'none';
-            }
-        }
-
-        function resetCard() {
-            if (confirm("確定要清除所有印章記錄嗎？\nAre you sure you want to clear your stamps?")) {
-                validZones.forEach(zone => localStorage.removeItem(zone));
-                renderStamps();
-            }
-        }
-
-        renderStamps();
-    </script>
-</body>
-</html>
+                // Handle Slot 2 state
+                if (stampCount === 2) {
