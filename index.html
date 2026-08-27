@@ -83,48 +83,21 @@
             background: #f7fafc;
             border: 2px dashed var(--border-color);
             border-radius: 12px;
-            padding: 18px 10px;
+            padding: 15px 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            position: relative;
-            min-height: 110px;
+            min-height: 130px;
+            box-sizing: border-box;
         }
 
-        /* Active class triggers when 2 stamps are successfully registered */
-        .card.active {
+        /* Highlights card when zone is completely done */
+        .card.zone-complete {
             border: 2px solid var(--success);
             background: #f0fff4;
             box-shadow: 0 4px 6px -1px rgba(72, 187, 120, 0.1);
-        }
-
-        /* Semi-active styling for the 1st scan */
-        .card.partial {
-            border: 2px dashed var(--success);
-            background: #fafdfb;
-        }
-
-        .icon {
-            font-size: 36px;
-            margin-bottom: 8px;
-            filter: grayscale(100%);
-            opacity: 0.25;
-            transition: all 0.3s ease;
-        }
-
-        /* 1st Stamp: Emoji icon becomes slightly colorful and visible */
-        .card.partial .icon {
-            filter: grayscale(50%);
-            opacity: 0.6;
-        }
-
-        /* 2nd Stamp: Full beautiful coloration and scaling effect */
-        .card.active .icon {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.08);
         }
 
         .label {
@@ -133,33 +106,86 @@
             color: #4a5568;
         }
 
-        .card.partial .label {
-            color: #2c6cb0;
+        .card.zone-complete .label {
+            color: var(--success);
         }
 
-        .card.active .label {
-            color: var(--success);
+        .stamps-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .stamp-slot {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background: #f0f4f8;
+            border: 2px dashed #cbd5e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        /* Default Placeholder Text Style */
+        .stamp-slot::before {
+            content: "•";
+            color: #a0aec0;
+            font-size: 24px;
+            position: absolute;
+            transition: all 0.2s;
+        }
+
+        /* Hide emoji icons completely until active state to prevent rendering issues */
+        .stamp-slot .icon {
+            font-size: 26px;
+            display: none;
+            margin: 0;
+            line-height: 1;
+        }
+
+        /* Active Stamp State overrides */
+        .stamp-slot.active {
+            border: 2px solid var(--success);
+            background: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* Hide the placeholder dot when stamped */
+        .stamp-slot.active::before {
+            display: none;
+        }
+
+        /* Flexibly reveal full color emojis cleanly */
+        .stamp-slot.active .icon {
+            display: block;
         }
 
         .stamp-mark {
             position: absolute;
-            top: 6px;
-            right: 6px;
+            top: -4px;
+            right: -4px;
             background: var(--success);
             color: white;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 11px;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transform: scale(0);
             transition: all 0.25s ease;
+            z-index: 5;
         }
 
-        .card.active .stamp-mark {
+        .stamp-slot.active .stamp-mark {
             opacity: 1;
             transform: scale(1);
         }
@@ -207,44 +233,56 @@
         <div class="grid">
             <!-- Zone 1 -->
             <div class="card" id="zone1">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🏮</div>
-                <div class="label" data-base="Zone 1">Zone 1</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏮</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏮</div></div>
+                </div>
+                <div class="label">Zone 1</div>
             </div>
 
             <!-- Zone 2 -->
             <div class="card" id="zone2">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🎶</div>
-                <div class="label" data-base="Zone 2">Zone 2</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🎶</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🎶</div></div>
+                </div>
+                <div class="label">Zone 2</div>
             </div>
 
             <!-- Zone 3 -->
             <div class="card" id="zone3">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">💻</div>
-                <div class="label" data-base="Zone 3">Zone 3</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💻</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💻</div></div>
+                </div>
+                <div class="label">Zone 3</div>
             </div>
 
             <!-- Zone 4 -->
             <div class="card" id="zone4">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">💼</div>
-                <div class="label" data-base="Zone 4">Zone 4</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">💼</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">💼</div></div>
+                </div>
+                <div class="label">Zone 4</div>
             </div>
 
             <!-- Zone 5 -->
             <div class="card" id="zone5">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🧘‍♀️</div>
-                <div class="label" data-base="Zone 5">Zone 5</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🧘‍♀️</div></div>
+                </div>
+                <div class="label">Zone 5</div>
             </div>
 
             <!-- Zone 6 -->
             <div class="card" id="zone6">
-                <div class="stamp-mark">✓</div>
-                <div class="icon">🏀</div>
-                <div class="label" data-base="Zone 6">Zone 6</div>
+                <div class="stamps-row">
+                    <div class="stamp-slot slot-1"><div class="stamp-mark">✓</div><div class="icon">🏀</div></div>
+                    <div class="stamp-slot slot-2"><div class="stamp-mark">✓</div><div class="icon">🏀</div></div>
+                </div>
+                <div class="label">Zone 6</div>
             </div>
         </div>
 
@@ -257,58 +295,22 @@
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const zoneScanned = urlParams.get('zone'); 
-
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
 
-        // Upgrade legacy true/false string data seamlessly to prevent counter calculation crashes
+        // Automatically purge conflicting text representations in local memory 
         validZones.forEach(zone => {
-            const oldVal = localStorage.getItem(zone);
-            if (oldVal === 'true') {
-                localStorage.setItem(zone, '2'); // Legacy active converts to completed zone
-            } else if (oldVal === 'false') {
+            const val = localStorage.getItem(zone);
+            if (val === 'true' || val === 'false') {
                 localStorage.removeItem(zone);
             }
         });
 
-        if (zoneScanned && validZones.includes(zoneScanned)) {
-            // Read digital counter state safely
-            let currentStamps = parseInt(localStorage.getItem(zoneScanned), 10) || 0;
-            
-            // Increment logic caps off at a maximum of 2 stamps per zone
-            if (currentStamps < 2) {
-                currentStamps++;
-                localStorage.setItem(zoneScanned, currentStamps.toString());
-            }
-            
-            const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.replaceState({path: cleanUrl}, '', cleanUrl);
+        function getSafeStampCount(zone) {
+            const rawValue = localStorage.getItem(zone);
+            if (!rawValue) return 0;
+            const parsed = parseInt(rawValue, 10);
+            return isNaN(parsed) ? 0 : parsed;
         }
 
-        function renderStamps() {
-            let totalStamps = 0;
-
-            validZones.forEach(zone => {
-                const stampCount = parseInt(localStorage.getItem(zone), 10) || 0;
-                const cardElement = document.getElementById(zone);
-                
-                if (cardElement) {
-                    const labelElement = cardElement.querySelector('.label');
-                    const baseText = labelElement.getAttribute('data-base');
-
-                    // Reset classes cleanly before setting state
-                    cardElement.classList.remove('partial', 'active');
-
-                    if (stampCount === 1) {
-                        // 1 Stamp: Show blue progression indicator tag
-                        cardElement.classList.add('partial');
-                        labelElement.innerText = `${baseText} (1/2)`;
-                        totalStamps += 1;
-                    } else if (stampCount === 2) {
-                        // 2 Stamps: Show successful fully colored checkmark state
-                        cardElement.classList.add('active');
-                        labelElement.innerText = `${baseText} (2/2)`;
-                        totalStamps += 2;
-                    } else {
-                        // 0 Stamps: Default empty state
+        function processIncomingScan() {
+            const urlParams = new URLSearchParams(window.location.search);
