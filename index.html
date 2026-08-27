@@ -93,7 +93,6 @@
             box-sizing: border-box;
         }
 
-        /* Highlights entire zone box green when BOTH stamps are earned */
         .card.zone-complete {
             border: 2px solid var(--success);
             background: #f0fff4;
@@ -111,7 +110,6 @@
             color: var(--success);
         }
 
-        /* Container that holds the 2 identical stamps side-by-side */
         .stamps-row {
             display: flex;
             gap: 10px;
@@ -119,7 +117,6 @@
             width: 100%;
         }
 
-        /* The circular stamp slot container */
         .stamp-slot {
             width: 50px;
             height: 50px;
@@ -134,7 +131,6 @@
             box-sizing: border-box;
         }
 
-        /* Greyed out emoji icon before getting stamped */
         .stamp-slot .icon {
             font-size: 24px;
             filter: grayscale(100%);
@@ -145,20 +141,17 @@
             line-height: 1;
         }
 
-        /* Active stamp slot state once scan is verified */
         .stamp-slot.active {
             border: 2px solid var(--success);
             background: #ffffff;
             transform: scale(1.05);
         }
 
-        /* Colored emoji icon when stamped */
         .stamp-slot.active .icon {
             filter: grayscale(0%);
             opacity: 1;
         }
 
-        /* Corner mini checkmark green badge */
         .stamp-mark {
             position: absolute;
             top: -4px;
@@ -296,14 +289,24 @@
     <script>
         const validZones = ['zone1', 'zone2', 'zone3', 'zone4', 'zone5', 'zone6'];
 
+        // Helper function to safely read stamp data as a valid integer (fixes legacy data issues)
+        function getSafeStampCount(zone) {
+            const rawValue = localStorage.getItem(zone);
+            if (!rawValue) return 0;
+            if (rawValue === 'true') return 1; // Safely handle old data from version 1
+            const parsed = parseInt(rawValue, 10);
+            return isNaN(parsed) ? 0 : parsed;
+        }
+
         function processIncomingScan() {
             const urlParams = new URLSearchParams(window.location.search);
             const zoneScanned = urlParams.get('zone'); 
 
             if (zoneScanned && validZones.includes(zoneScanned)) {
-                // 1. Fetch current structural count safely 
-                let currentStamps = parseInt(localStorage.getItem(zoneScanned)) || 0;
+                let currentStamps = getSafeStampCount(zoneScanned);
                 
-                // 2. Increment numeric data logically (up to 2 maximum)
                 if (currentStamps < 2) {
                     currentStamps++;
+                    localStorage.setItem(zoneScanned, currentStamps.toString());
+                }
+                
